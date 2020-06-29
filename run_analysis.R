@@ -1,16 +1,16 @@
 library(dplyr)
 
 # read in the data
-subject_train <- read.csv("../UCI HAR Dataset/train/subject_train.txt", header=FALSE)
-x_train <- read.csv("../UCI HAR Dataset/train/X_train.txt", sep = "", header=FALSE)
-y_train <- read.csv("../UCI HAR Dataset/train/y_train.txt", header=FALSE)
-subject_test <- read.csv("../UCI HAR Dataset/test/subject_test.txt", header=FALSE)
-x_test <- read.csv("../UCI HAR Dataset/test/X_test.txt", sep = "", header=FALSE)
-y_test <- read.csv("../UCI HAR Dataset/test/y_test.txt", header=FALSE)
+subject_train <- read.csv("../UCI HAR Dataset/train/subject_train.txt", header = FALSE)
+x_train <- read.csv("../UCI HAR Dataset/train/X_train.txt", sep = "", header = FALSE)
+y_train <- read.csv("../UCI HAR Dataset/train/y_train.txt", header = FALSE)
+subject_test <- read.csv("../UCI HAR Dataset/test/subject_test.txt", header = FALSE)
+x_test <- read.csv("../UCI HAR Dataset/test/X_test.txt", sep = "", header = FALSE)
+y_test <- read.csv("../UCI HAR Dataset/test/y_test.txt", header = FALSE)
 
 # 4. Appropriately labels the data set with descriptive variable names.
 # name the columns according to the features
-data_names <- read.csv("../UCI HAR Dataset/features.txt", sep = "", header=FALSE)
+data_names <- read.csv("../UCI HAR Dataset/features.txt", sep = "", header = FALSE)
 names(x_train) <- data_names$V2
 names(x_test) <- data_names$V2
 
@@ -33,7 +33,7 @@ subset <- fulldata %>%
 
 # 3. Uses descriptive activity names to name the activities in the data set
 
-activitylabels <- read.csv("../UCI HAR Dataset/activity_labels.txt", sep = "", header=FALSE)
+activitylabels <- read.csv("../UCI HAR Dataset/activity_labels.txt", sep = "", header = FALSE)
 names(activitylabels) <- c("activityid", "activitylabel")
 subset <- inner_join(activitylabels, subset, by = "activityid") %>%
     select(-activityid)
@@ -46,7 +46,8 @@ summariseddataset <-
     group_by(activitylabel, subjectid) %>%
     summarise_all(list(mean))
 
-write.table(summarised_dataset, file = "SummarisedDataset.csv", sep = " ")
+# Creating a csv from the dataset. Excluding the row ids.
+write.csv(summariseddataset, file = "SummarisedDataset.csv", row.names = FALSE)
 
 
 # the below wasn't tried.. qdap library had too many dependencies, couldn't be bothered fixing them.
