@@ -1,6 +1,6 @@
 # GettingAndCleaningData
 
-The goal of this submission is to submit an assignment which fulfils the following criteria:
+The goal of this assignment is to submit work which fulfils the following criteria:
 1. Merges the training and the test sets to create one data set.
 1. Extracts only the measurements on the mean and standard deviation for each measurement.
 1. Uses descriptive activity names to name the activities in the data set
@@ -17,18 +17,18 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 1. Reads in the data from the various data files.
 1. Labels the data to make it easier for binding later and for easy understanding.
 1. Binds the data together to form one data set.
-1. Extracts the mean and standard deviation measurements.
-1. Uses descriptive activity names instead of the ids.
-1. Calculates the average for across all the activies, per subjectid and activity.
-1. Writes the tidy summary data to a csv.
+1. Extracts the data relating to mean and standard deviation.
+1. Uses descriptive activity names instead of ids.
+1. Calculates the average for all the data points, per subjectid and activity.
+1. Writes the summary data to a csv.
 
 ## Specifics of the code
 
-The code run over the above data is [run_analysis.R](run_analysis.R). I've assumed
+The code run over the data is [run_analysis.R](./run_analysis.R). I've assumed
 that the original data has been unzipped and is stored in the folder above this one. 
 
 First I've read in the data. The data do not have headers in this case, so I've explicitly
-excluded them. In the case of the activity data, I've needed to specify the separator.
+excluded them. In the case of the activity measurements, I've needed to specify the separator.
 ```{r}
 subject_train <- read.csv("../UCI HAR Dataset/train/subject_train.txt", header = FALSE)
 x_train <- read.csv("../UCI HAR Dataset/train/X_train.txt", sep = "", header = FALSE)
@@ -39,7 +39,7 @@ y_test <- read.csv("../UCI HAR Dataset/test/y_test.txt", header = FALSE)
 ```
 
 I then name the data in order to make binding the training and test data easier.
-This is where I'm appropriately labelling the data set with descriptive variable names.
+This is where I'm labelling the data set with descriptive variable names.
 ```{r}
 data_names <- read.csv("../UCI HAR Dataset/features.txt", sep = "", header = FALSE)
 names(x_train) <- data_names$V2
@@ -60,7 +60,7 @@ subject <- bind_rows(subject_test, subject_train)
 fulldata <- bind_cols(subject, y, x)
 ```
 
-I extracts only the measurements on the mean and standard deviation for each measurement.
+I extract only the measurements of the mean and standard deviation for each measurement.
 I'm basing my extraction of columns based in the variable name containing the word "mean" or "std".
 I've ignored case as there are some variable names containing the word "Mean"
 ```{r}
@@ -78,17 +78,15 @@ subset <- inner_join(activitylabels, subset, by = "activityid") %>%
     select(-activityid)
 ```
 
-
 I've created an independent tidy data set with the average (mean) of each variable,
 grouped by each activity and each subject.
 ```{r}
-summariseddataset <- 
-    subset %>%
+summariseddataset <- subset %>%
     group_by(activitylabel, subjectid) %>%
     summarise_all(list(mean))
 ```
 
-I've then written that data set to a new file, [SummarisedDataset.csv](SummarisedDataset.csv).
+I've then written that data set to a new file, [SummarisedDataset.csv](./SummarisedDataset.csv).
 ```{r}
 write.csv(summariseddataset, file = "SummarisedDataset.csv", row.names = FALSE)
 ```
