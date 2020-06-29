@@ -45,5 +45,5 @@ summariseddataset <-
     summarise_all(list(mean))
 
 # Creating a csv from the dataset. Excluding the row ids.
-write.csv(summariseddataset, file = "SummarisedDataset.csv", row.names = FALSE)
+write.table(summariseddataset, file = "SummarisedDataset.txt", row.names = FALSE)
 
