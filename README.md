@@ -88,7 +88,9 @@ summariseddataset <- subset %>%
     summarise_all(list(mean))
 ```
 
-I've then written that data set to a new file, [SummarisedDataset.csv](./SummarisedDataset.csv).
+I've then written that data set to a new file, [SummarisedDataset.txt](./SummarisedDataset.txt), to upload for this assignment.
+Note that I've also written the same data to [SummarisedDataset.csv](./SummarisedDataset.csv) using write.csv(),
+as it's easier to read on github.
 ```{r}
-write.csv(summariseddataset, file = "SummarisedDataset.csv", row.names = FALSE)
+write.table(summariseddataset, file = "SummarisedDataset.txt", row.names = FALSE)
 ```
