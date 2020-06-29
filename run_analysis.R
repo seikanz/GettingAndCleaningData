@@ -27,12 +27,10 @@ subject <- bind_rows(subject_test, subject_train)
 fulldata <- bind_cols(subject, y, x)
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-# I'm basing my extraction of columns based in the variable name containing the word "mean" or "std"
 subset <- fulldata %>%
     select(subjectid, activityid, grep("mean|std", names(fulldata), ignore.case = TRUE) )
 
 # 3. Uses descriptive activity names to name the activities in the data set
-
 activitylabels <- read.csv("../UCI HAR Dataset/activity_labels.txt", sep = "", header = FALSE)
 names(activitylabels) <- c("activityid", "activitylabel")
 subset <- inner_join(activitylabels, subset, by = "activityid") %>%
@@ -48,9 +46,4 @@ summariseddataset <-
 
 # Creating a csv from the dataset. Excluding the row ids.
 write.csv(summariseddataset, file = "SummarisedDataset.csv", row.names = FALSE)
-
-
-# the below wasn't tried.. qdap library had too many dependencies, couldn't be bothered fixing them.
-#library(qdap)
-#subset$activity_labels <- mgsub(activitylabels$V1, activitylabels$V2,names(x1))
 
