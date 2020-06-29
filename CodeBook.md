@@ -1,6 +1,8 @@
 # CodeBook
 
-This codebook describes the variables, the data, and any transformations or work that you performed to clean up the data.
+This codebook describes the variables, the data, and any transformations or work that I performed to clean up the data.
+
+## The Data
 
 The original data:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
@@ -8,6 +10,8 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 This represents data collected from accelerometers from Samsung Galaxy S smartphones. A full description is available at the site where the data was obtained:
 
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+## The Variables
 
 The variables in the data are outlined as follows:
 
@@ -101,3 +105,12 @@ angle(tBodyGyroJerkMean,gravityMean)	|	-1 to 1	|	Average of the signals in a sig
 angle(X,gravityMean)	|	-1 to 1	|	Average of the signals in a signal window sample of the gravity acceleration signal over the time domain (X coordinate)
 angle(Y,gravityMean)	|	-1 to 1	|	Average of the signals in a signal window sample of the gravity acceleration signal over the time domain (Y coordinate)
 angle(Z,gravityMean)	|	-1 to 1	|	Average of the signals in a signal window sample of the gravity acceleration signal over the time domain (Z coordinate)
+
+## The Transformations
+
+I used the following transformations to tidy the data:
+* `bind_rows()` to merge the train and test data.
+* `bind_cols()` to merge the subjectid, activity and measurements.
+* `select()` along with a `grep()` to extract a subset of the data (only the means and std devs).
+* `inner_join()` to merge the activity labels with the rest of the data, followed by `select()` to remove the activity ids.
+* `group_by()` and `summarise_all()` to calculate averages of all the measurements.

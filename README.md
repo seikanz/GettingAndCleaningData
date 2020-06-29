@@ -7,13 +7,15 @@ The goal of this assignment is to submit work which fulfils the following criter
 1. Appropriately labels the data set with descriptive variable names.
 1. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+This repository contains the script (more information below) and a [CodeBook](./CodeBook.md) of the data.
+
 ## Data
 
 The original data are found here:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 ## Flow of operations
-[run_analysis.R](../run_analysis.R) performs the following actions:
+[run_analysis.R](./run_analysis.R) performs the following actions:
 1. Reads in the data from the various data files.
 1. Labels the data to make it easier for binding later and for easy understanding.
 1. Binds the data together to form one data set.
